@@ -8,6 +8,11 @@ class StatusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final socketService = Provider.of<SocketService>(context);
-    return const Scaffold(body: Center(child: Text('Hallo Welt!')));
+    return Scaffold(
+        body: Center(
+            child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [Text('Server status: ${socketService.serverStatus}')],
+    )));
   }
 }

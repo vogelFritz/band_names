@@ -6,6 +6,9 @@ enum ServerStatus { online, offline, connecting }
 
 class SocketService with ChangeNotifier {
   ServerStatus _serverStatus = ServerStatus.connecting;
+
+  ServerStatus get serverStatus => _serverStatus;
+
   SocketService() {
     _initConfig();
   }
@@ -15,7 +18,13 @@ class SocketService with ChangeNotifier {
       'autoConnect': true,
     });
     socket.onConnect((_) {
+      _serverStatus = ServerStatus.online;
+      notifyListeners();
       socket.emit('mensaje', 'test');
+    });
+    socket.onDisconnect((_) {
+      _serverStatus = ServerStatus.offline;
+      notifyListeners();
     });
   }
 }
